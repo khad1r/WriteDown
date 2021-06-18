@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>App</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-menu">
+            <a href="#todo" class="navbar-menu-item active">
+                <i class="fas fa-clipboard-list"></i>
+                <span class="navbar-menu-item-label">Todo</span>
+            </a>
+            <a href="#note" class="navbar-menu-item">
+                <i class="fas fa-sticky-note"></i>
+                <span class="navbar-menu-item-label">Note</span>
+            </a>
+        </div>
+    </nav>
+    <div id="page">
+        <section class="page-panel" id="todo">
+            <div class="container">
+                <header class="header">
+                    <h1>TODO LIST</h1>
+                </header>
+                <form class="todo-form">
+                    <div class="input-container">
+                        <input type="text" class="todo-input" autofocus>
+                        <button type="submit" class="todo-button">
+                            <i class="fas fa-plus-square"></i>
+                        </button>
+                    </div>
+                    <div class="select">
+                        <select name="todos" class="todo-filter">
+                            <option value="all">All</option>
+                            <option value="completed">Completed</option>
+                            <option value="uncompleted">Uncompleted</option>All</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="todo-container">
+                    <ul class="todo-list"></ul>
+                </div>
+            </div>
+        </section>
+        <section class="page-panel" id="note">
+            <div class="container">
+                <header class="header">
+                    <h1>NOTE</h1>
+                </header>
+                <div class=btn-container>
+                    <button class="new-note">New Note</button>
+                </div>
+                <ul class="note-container"></ul>
+            </div>
+        </section>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" id="close">&times;</span>
+                <h2 id="note-title-input" contenteditable="true">Modal Header</h2>
+            </div>
+            <div class="modal-body">
+                <div id="note-input" contenteditable="true">
+                    <p>Some text in the Modal Body</p>
+                    <p>Some other text...</p>
+                </div>
+                <div id="note-image"></div>
+            </div>
+
+            <div class="modal-footer">
+                <div>
+                    <button id="camera"><i class="fas fa-camera"></i></button>
+                </div>
+                <div>
+                    <button class="save-note">Save <i class="far fa-save"></i></button>
+                    <button class="delete-note">Delete <i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="cordova.js"></script>
+    <script type="module" defer src="js/script.js"></script>
+</body>
+
+</html>
