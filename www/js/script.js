@@ -46,16 +46,6 @@ document.querySelector(".navbar-menu").addEventListener("click", (click) => {
 //function
 
 function onDeviceReady() {
-  isDeviceReady = true;
-  let Todos = getTodos();
-  let Notes = getNotes();
-  console.log(Todos, Notes);
-  Todos.forEach((todo) => {
-    createTodo(todo);
-  });
-  Notes.forEach((note) => {
-    createNote(note);
-  });
   window.resolveLocalFileSystemURL(
     cordova.file.dataDirectory,
     (fs) => {
@@ -66,6 +56,7 @@ function onDeviceReady() {
         function (d) {
           console.log(d);
           imageDir = d;
+          isDeviceReady = true;
         },
         (err) => {
           console.log("error get directory: " + err.code);
@@ -76,6 +67,15 @@ function onDeviceReady() {
       console.log("error get dataDir code: " + err.code);
     }
   );
+  let Todos = getTodos();
+  let Notes = getNotes();
+  console.log(Todos, Notes);
+  Todos.forEach((todo) => {
+    createTodo(todo);
+  });
+  Notes.forEach((note) => {
+    createNote(note);
+  });
 }
 function createTodo(Todo) {
   const todoDOM = document.createElement("div");
@@ -131,6 +131,7 @@ function deleteCheck(click) {
   //check
   if (item.classList.contains("complete-btn")) {
     todo.check();
+    filterTodo(todo);
     saveTodos();
   }
 }
@@ -174,13 +175,12 @@ function createNote(Note) {
     img.classList.add("note-image");
     img.innerHTML = '<i class="fas fa-image"></i>';
     noteDOM.appendChild(img);
-    moveImgArray(noteDOM["note"][2]).then((imgSrcs) => {
-      noteDOM["note"][2] = imgSrcs;
-      saveNotes();
-    });
-    // (async () => {
-    //   noteDOM["note"][2] = await moveImgArray(noteDOM["note"][2]);
-    // })();
+    if (isDeviceReady) {
+      moveImgArray(noteDOM["note"][2]).then((imgSrcs) => {
+        noteDOM["note"][2] = imgSrcs;
+        saveNotes();
+      });
+    }
   }
   console.log(noteDOM["note"]);
   noteDOM.addEventListener("click", (click) => {
@@ -195,19 +195,16 @@ function editNote(Note, noteDOM) {
   noteDOM.children[1].innerHTML = Note[1];
   noteDOM["note"] = Note;
   if (Note[2].length > 0) {
-    if (!noteDOM.children[3]) {
+    if (!noteDOM.children[2]) {
       const img = document.createElement("span");
       img.classList.add("note-image");
       img.innerHTML = '<i class="fas fa-image"></i>';
       noteDOM.appendChild(img);
-      moveImgArray(noteDOM["note"][2]).then((imgSrcs) => {
-        noteDOM["note"][2] = imgSrcs;
-        saveNotes();
-      });
-      // (async () => {
-      //   noteDOM["note"][2] = await moveImgArray(noteDOM["note"][2]);
-      // })();
     }
+    moveImgArray(noteDOM["note"][2]).then((imgSrcs) => {
+      noteDOM["note"][2] = imgSrcs;
+      saveNotes();
+    });
   } else {
     if (noteDOM.children[2]) {
       noteDOM.children[2].remove();
@@ -258,17 +255,23 @@ function moveImagetoDataStorage(imgUri) {
     window.resolveLocalFileSystemURL(
       imgUri,
       (fileEntry) => {
-        console.log(fileEntry);
-        fileEntry.moveTo(
-          imageDir,
-          fileEntry.fullPath,
-          (newSrc) => {
-            resolve(newSrc.nativeURL);
-          },
-          (err) => {
-            reject("Move error code: " + err.code);
-          }
-        );
+        if (fileEntry.filesystem.name !== "files") {
+          console.log("moving");
+          fileEntry.moveTo(
+            imageDir,
+            fileEntry.name,
+            (newSrc) => {
+              console.log(newSrc);
+              resolve(newSrc.nativeURL);
+            },
+            (err) => {
+              reject("Move error: " + err.code);
+            }
+          );
+        } else {
+          console.log("Not moving");
+          resolve(fileEntry.nativeURL);
+        }
       },
       (err) => {
         reject("error code: " + err.code);
@@ -285,12 +288,6 @@ function moveImgArray(arraySrc) {
     const newSrc = await Promise.all(Src);
     resolve(newSrc);
   });
-  // const Src = arraySrc.map(async (src) => {
-  //   const dest = await moveImagetoDataStorage(src);
-  //   return dest;
-  // });
-  // const newSrc = await Promise.all(Src);
-  // return newSrc;
 }
 function removeImg(imgUri) {
   window.resolveLocalFileSystemURL(
