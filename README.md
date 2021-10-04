@@ -14,4 +14,11 @@ cordova platform add android
 ```
 cordova run android
 ```
+
+### To use web:
+
+```
+cordova platform add browser
+cordova run browser
+```
 copyright khad1r@github
