@@ -6,7 +6,7 @@ Todo and Note App for android using Cordova
 
 ```
 npm install -g cordova
-cordova platform add andorid
+cordova platform add android
 ```
 
 ### To use:
