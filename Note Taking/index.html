@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Note</title>
+</head>
+
+<body>
+    <div class="note-container">
+        <header class="header">
+            <h1>NOTE</h1>
+        </header>
+        <div class=btn-container>
+            <button class="new-note">New Note</button>
+        </div>
+        <ul class="notes-container"></ul>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" id="close">&times;</span>
+                <h2 id="note-title-input" contenteditable="true">Modal Header</h2>
+            </div>
+            <div class="modal-body">
+                <div id="note-input" contenteditable="true">
+                    <p>Some text in the Modal Body</p>
+                    <p>Some other text...</p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div>
+                    <button class="save-note">Save</button>
+                    <button class="delete-note">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" defer src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ccc;
+  color: #222;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.note-container {
+  display: grid;
+  justify-items: center;
+  max-width: 100vw;
+  min-height: 100vh;
+}
+.header {
+  font-size: 1.5rem;
+}
+button {
+  color: #222;
+  padding: 0.5rem;
+  font-size: 2rem;
+  border: none;
+  background: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:active {
+  color: white;
+  background-color: #f0c006;
+}
+
+.btn-container {
+  width: 10rem;
+}
+.new-note {
+  width: 100%;
+  font-size: 1.2rem;
+  border: 1px solid #fff;
+}
+
+.modal {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 6; /* Sit on top */
+  padding-top: 10vh; /* Location of the box */
+  left: 0;
+  top: 0;
+  font-size: 0.8rem;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+.modal-content {
+  position: relative;
+  background-color: #f0c006;
+  color: #222;
+  margin: auto;
+  -webkit-box-shadow: 1px 1px 7px 1px #fff;
+  box-shadow: 1px 1px 7px 1px #fff;
+  width: clamp(18.75rem, 50vw, 43.75rem);
+  -webkit-animation-name: fadein;
+  -webkit-animation-duration: 0.1s;
+  animation-name: fadein;
+  animation-duration: 0.1s;
+}
+
+.save-note,
+.delete-note {
+  font-size: 1em;
+  border-radius: 0.5em;
+}
+.save-note:active {
+  color: hsl(120, 70%, 45%);
+  background: white;
+}
+.delete-note:active {
+  color: hsl(0, 70%, 45%);
+  background: white;
+}
+.modal-close {
+  position: absolute;
+  right: 1rem;
+  top: 0.4rem;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 1rem;
+}
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+.modal-body {
+  min-height: 60vh;
+  padding: 1rem;
+  overflow-y: auto;
+}
+#note-input {
+  outline: 0;
+  padding-bottom: 1rem;
+}
+#note-title-input {
+  outline: 0;
+}
+
+.notes-container {
+  padding: 1rem;
+  list-style: none;
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.note {
+  margin: 1rem;
+  background-color: #f0c006;
+  color: #333;
+  width: 20rem;
+  min-height: 30vh;
+  cursor: pointer;
+  position: relative;
+}
+.note-head {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.note-head,
+.note-body {
+  overflow: hidden;
+  overflow-wrap: break-word;
+  padding: 1rem;
+  pointer-events: none;
+}
+.note-body {
+  white-space: initial;
+  display: -webkit-box;
+  -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+}
+.note-body p {
+  display: content;
+}
